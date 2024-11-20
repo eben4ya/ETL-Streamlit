@@ -67,6 +67,9 @@ def plot_weather_aqi_correlation(data):
     return plt.gcf()  # Return the figure object
 
 def plot_aqi_predictions(predictions, days):
+    """
+    Plot predicted AQI for the next specified number of days.
+    """
     fig, ax = plt.subplots(figsize=(10, 6))
     ax.plot(range(1, days + 1), predictions, marker='o', linestyle='-', color='b')
     ax.set_title(f"Predicted AQI for the Next {days} Days")

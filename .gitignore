@@ -1,2 +1,8 @@
+# virtualenv
 streamlit-venv
+
+# cache
 __pycache__
+
+# env
+.env

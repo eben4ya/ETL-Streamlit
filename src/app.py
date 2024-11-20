@@ -29,6 +29,8 @@ ORDER BY time_of_record_wib ASC
 """
 data = fetch_data(query)
 
+# data.to_csv('data.csv', index=False)
+
 # Sidebar
 st.sidebar.title("Weather and Air Quality Dashboard")
 insight = st.sidebar.radio(

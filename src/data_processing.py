@@ -10,13 +10,20 @@ def load_data():
 def filter_data(data, start_date, end_date):
     """
     Filter the data based on the specified date range (WIB).
+    Handles cases where the 'Time of Record (WIB)' is a string or datetime.
     """
-    # Convert start_date and end_date to pandas Timestamps
+    # Ensure start_date and end_date are pandas Timestamps
     start_date = pd.Timestamp(start_date)
     end_date = pd.Timestamp(end_date)
 
+    # Ensure 'Time of Record (WIB)' is a datetime column
+    if not pd.api.types.is_datetime64_any_dtype(data['Time of Record (WIB)']):
+        data['Time of Record (WIB)'] = pd.to_datetime(data['Time of Record (WIB)'])
+
     # Filter data based on 'Time of Record (WIB)'
-    return data[(data['Time of Record (WIB)'] >= start_date) & (data['Time of Record (WIB)'] <= end_date)]
+    filtered_data = data[(data['Time of Record (WIB)'] >= start_date) & (data['Time of Record (WIB)'] <= end_date)]
+
+    return filtered_data
 
 
 def calculate_regression_coefficients(data):

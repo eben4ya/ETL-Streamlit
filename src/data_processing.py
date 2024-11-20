@@ -21,21 +21,31 @@ def filter_data(data, start_date, end_date):
 
 
 def calculate_regression_coefficients(data):
-    # Define input variables (X) and output variable (Y)
-    X = data[['temperature_c', 'humidity_percent',
-              'pressure_hpa', 'wind_speed_ms']].values
-    Y = data['aqi'].values
+    """
+    Calculate regression coefficients for predicting AQI based on weather parameters.
+    Input features: Temperature, Humidity, Pressure, Wind Speed.
+    Target: AQI (CN).
+    """
+    # Extract input features (X) and target variable (Y)
+    X = data[['Temperature (°C)', 'Humidity (%)',
+              'Pressure', 'Wind Speed (m/s)']].values
+    Y = data['AQI (CN)'].values
 
-    # Add a bias term (intercept)
+    # Add a bias term (intercept) to the input features
     X = np.c_[np.ones(X.shape[0]), X]
 
-    # Calculate regression coefficients using the normal equation
+    # Compute regression coefficients using the normal equation
     coefficients = np.linalg.inv(X.T @ X) @ X.T @ Y
     return coefficients
 
 
 def predict_aqi(coefficients, input_data):
+    """
+    Predict AQI based on the regression coefficients and input weather parameters.
+    """
     # Add a bias term (intercept) to input data
     input_data = np.c_[np.ones(input_data.shape[0]), input_data]
+
+    # Compute predictions
     predictions = input_data @ coefficients
     return predictions

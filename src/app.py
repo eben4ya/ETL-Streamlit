@@ -29,9 +29,9 @@ insight = st.sidebar.radio(
 # Show date inputs for all insights except "AQI Predictions"
 if insight != "AQI Predictions":
     start_date = st.sidebar.date_input(
-        "Start Date (WIB)", data['datetime_wib'].min().date())
+        "Start Date (WIB)", data['Time of Record (WIB)'].min().date())
     end_date = st.sidebar.date_input(
-        "End Date (WIB)", data['datetime_wib'].max().date())
+        "End Date (WIB)", data['Time of Record (WIB)'].max().date())
     # Filter data based on date (WIB)
     filtered_data = filter_data(data, start_date, end_date)
 else:
@@ -61,7 +61,7 @@ elif insight == "AQI Predictions":
 
     # Generate dummy input for the next 'days' days (e.g., average weather conditions)
     avg_weather = filtered_data[[
-        'temperature_c', 'humidity_percent', 'pressure_hpa', 'wind_speed_ms']].mean().values
+        'Temperature (°C)', 'Humidity (%)', 'Pressure', 'Wind Speed (m/s)']].mean().values
     # Repeat the averages for the number of days
     input_data = np.tile(avg_weather, (days, 1))
 

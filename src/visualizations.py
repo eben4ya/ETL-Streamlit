@@ -2,8 +2,11 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 def plot_aqi_trend(data):
+    """
+    Plot the trend of average AQI over time (WIB).
+    """
     fig, ax = plt.subplots()
-    data.groupby(data['datetime_wib'].dt.date)['aqi'].mean().plot(ax=ax)
+    data.groupby(data['Time of Record (WIB)'].dt.date)['AQI (CN)'].mean().plot(ax=ax)
     ax.set_title("AQI Trend Over Time (WIB)")
     ax.set_xlabel("Date (WIB)")
     ax.set_ylabel("Average AQI")

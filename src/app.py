@@ -2,7 +2,7 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 
-from data_processing import load_data, filter_data, calculate_regression_coefficients, predict_aqi
+from data_processing import filter_data, calculate_regression_coefficients, predict_aqi
 from visualizations import (
     plot_aqi_trend,
     plot_aqi_distribution_by_weather_desc,
@@ -10,9 +10,24 @@ from visualizations import (
     plot_weather_aqi_correlation,
     plot_aqi_predictions
 )
+from data_aiven import fetch_data
 
 # Load data
-data = load_data()
+# SQL query to fetch the required data
+query = """
+SELECT 
+    time_of_record_wib AS "Time of Record (WIB)",
+    temperature_c AS "Temperature (°C)",
+    humidity_percent AS "Humidity (%)",
+    pressure_hpa AS "Pressure",
+    wind_speed_ms AS "Wind Speed (m/s)",
+    weather_description AS "Weather Description",
+    aqi_cn AS "AQI (CN)",
+    main_pollutant_cn AS "Main Pollutant (CN)"
+FROM weather_pollution_predictions
+ORDER BY time_of_record_wib ASC
+"""
+data = fetch_data(query)
 
 # Sidebar
 st.sidebar.title("Weather and Air Quality Dashboard")

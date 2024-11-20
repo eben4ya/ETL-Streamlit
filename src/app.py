@@ -2,7 +2,7 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 
-from data_processing import filter_data, calculate_regression_coefficients, predict_aqi
+from data_processing import load_data, filter_data, calculate_regression_coefficients, predict_aqi
 from visualizations import (
     plot_aqi_trend,
     plot_aqi_distribution_by_weather_desc,
@@ -29,13 +29,16 @@ ORDER BY time_of_record_wib ASC
 """
 data = fetch_data(query)
 
+data_dummy = load_data()
+
 # data.to_csv('data.csv', index=False)
 
 # Sidebar
 st.sidebar.title("Weather and Air Quality Dashboard")
 insight = st.sidebar.radio(
     "Select Insight",
-    ["AQI Trend Over Time",
+    [
+        # "AQI Trend Over Time",
      "AQI Distribution by Weather Description",
      "Main Pollutants by Weather Description",
      "Correlation Between Weather Parameters and AQI",
@@ -64,6 +67,11 @@ st.title("Weather and Air Quality Dashboard")
 
 if insight == "AQI Trend Over Time":
     st.pyplot(plot_aqi_trend(filtered_data))
+    # st.pyplot(plot_aqi_trend(data_dummy))
+    # st.pyplot(plot_aqi_trend(data))
+    # st.write(data)
+    # st.write(data_dummy)
+    # st.write(filtered_data)
 elif insight == "AQI Distribution by Weather Description":
     st.pyplot(plot_aqi_distribution_by_weather_desc(filtered_data))
 elif insight == "Main Pollutants by Weather Description":

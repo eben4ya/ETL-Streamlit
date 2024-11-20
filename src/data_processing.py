@@ -26,9 +26,9 @@ def filter_data(data, start_date, end_date):
     return filtered_data
 
 
-def calculate_regression_coefficients(data):
+def calculate_regression_coefficients(data, alpha=0.1):
     """
-    Calculate regression coefficients for predicting AQI based on weather parameters.
+    Calculate regression coefficients for predicting AQI using Ridge Regression (L2 Regularization).
     Input features: Temperature, Humidity, Pressure, Wind Speed.
     Target: AQI (CN).
     """
@@ -40,18 +40,30 @@ def calculate_regression_coefficients(data):
     # Add a bias term (intercept) to the input features
     X = np.c_[np.ones(X.shape[0]), X]
 
-    # Compute regression coefficients using the normal equation
-    coefficients = np.linalg.inv(X.T @ X) @ X.T @ Y
+    # Compute Ridge Regression coefficients
+    # Ridge Regression formula: (X^T X + alpha*I)^-1 X^T Y
+    n_features = X.shape[1]
+    identity = np.eye(n_features)  # Identity matrix
+    identity[0, 0] = 0  # Do not regularize the bias term
+    coefficients = np.linalg.inv(X.T @ X + alpha * identity) @ X.T @ Y
+
     return coefficients
 
 
-def predict_aqi(coefficients, input_data):
+def predict_aqi(coefficients, input_data, noise_std=5):
     """
     Predict AQI based on the regression coefficients and input weather parameters.
+    Add variability to predictions using random noise.
     """
     # Add a bias term (intercept) to input data
     input_data = np.c_[np.ones(input_data.shape[0]), input_data]
 
     # Compute predictions
     predictions = input_data @ coefficients
+
+    # Add random noise to predictions for variability
+    noise = np.random.normal(0, noise_std, size=predictions.shape)
+    predictions += noise
+
     return predictions
+

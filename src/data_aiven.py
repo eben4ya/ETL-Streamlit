@@ -1,23 +1,30 @@
 import psycopg2
 import pandas as pd
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Fungsi untuk koneksi ke PostgreSQL
 def get_postgresql_connection():
     return psycopg2.connect(
-        host="",  
-        port="",  
-        database="", 
-        user="",
-        password="", 
-        sslmode=""  # Aiven biasanya membutuhkan koneksi SSL
+        host=os.getenv("DB_HOST"),  
+        port=os.getenv("DB_PORT"),  
+        database=os.getenv("DB_NAME"), 
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD"), 
+        sslmode=os.getenv("DB_SSLMODE", "require")  # Default ke "require" jika tidak ada di .env
     )
 
 # Fungsi untuk mengambil data dari PostgreSQL
 def fetch_data(query):
     conn = get_postgresql_connection()
     try:
+        # Gunakan pandas untuk membaca query ke dalam DataFrame
         df = pd.read_sql_query(query, conn)
     finally:
+        # Tutup koneksi setelah digunakan
         conn.close()
     return df
 

@@ -9,13 +9,15 @@ def plot_aqi_trend(data):
     ax.set_ylabel("Average AQI")
     return fig
 
-def plot_aqi_distribution_by_weather(data):
-    fig, ax = plt.subplots()
-    data.boxplot(column='aqi', by='weather_condition_id', ax=ax)
-    ax.set_title("AQI Distribution by Weather Condition")
-    ax.set_xlabel("Weather Condition")
+def plot_aqi_distribution_by_weather_desc(data):
+    fig, ax = plt.subplots(figsize=(10, 6))  # Adjust the figure size
+    data.boxplot(column='aqi', by='weather_desc', ax=ax, grid=False, rot=45)
+    ax.set_title("AQI Distribution by Weather Description")
+    ax.set_xlabel("Weather Description")
     ax.set_ylabel("AQI")
+    plt.suptitle("")  # Remove the default title added by pandas boxplot
     return fig
+
 
 def plot_main_pollutant_by_weather(data):
     fig, ax = plt.subplots()

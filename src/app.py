@@ -2,7 +2,7 @@ import streamlit as st
 from data_processing import load_data, filter_data
 from visualizations import (
     plot_aqi_trend,
-    plot_aqi_distribution_by_weather,
+    plot_aqi_distribution_by_weather_desc,
     plot_main_pollutant_by_weather,
     plot_weather_aqi_correlation,
 )
@@ -15,7 +15,7 @@ st.sidebar.title("Weather and Air Quality Dashboard")
 insight = st.sidebar.radio(
     "Select Insight", 
     ["AQI Trend Over Time", 
-     "AQI Distribution by Weather Condition", 
+     "AQI Distribution by Weather Description", 
      "Main Pollutants by Weather Condition", 
      "Correlation Between Weather Parameters and AQI"]
 )
@@ -31,8 +31,8 @@ st.title("Weather and Air Quality Dashboard")
 
 if insight == "AQI Trend Over Time":
     st.pyplot(plot_aqi_trend(filtered_data))
-elif insight == "AQI Distribution by Weather Condition":
-    st.pyplot(plot_aqi_distribution_by_weather(filtered_data))
+elif insight == "AQI Distribution by Weather Description":
+    st.pyplot(plot_aqi_distribution_by_weather_desc(filtered_data))
 elif insight == "Main Pollutants by Weather Condition":
     st.pyplot(plot_main_pollutant_by_weather(filtered_data))
 elif insight == "Correlation Between Weather Parameters and AQI":

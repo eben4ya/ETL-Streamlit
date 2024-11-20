@@ -54,3 +54,14 @@ def plot_weather_aqi_correlation(data):
     # Fix layout issues if any
     plt.suptitle("Correlation Between Weather Parameters and AQI")  # Add a title
     return plt.gcf()  # Return the figure object
+
+def plot_aqi_predictions(predictions, days):
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ax.plot(range(1, days + 1), predictions, marker='o', linestyle='-', color='b')
+    ax.set_title(f"Predicted AQI for the Next {days} Days")
+    ax.set_xlabel("Days")
+    ax.set_ylabel("Predicted AQI")
+    ax.set_xticks(range(1, days + 1))
+    ax.grid()
+    return fig
+

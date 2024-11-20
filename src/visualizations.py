@@ -19,12 +19,21 @@ def plot_aqi_distribution_by_weather_desc(data):
     return fig
 
 
-def plot_main_pollutant_by_weather(data):
-    fig, ax = plt.subplots()
-    data.groupby('weather_condition_id')['main_pollutant'].value_counts().unstack().plot(kind='bar', stacked=True, ax=ax)
-    ax.set_title("Main Pollutants by Weather Condition")
-    ax.set_xlabel("Weather Condition")
+def plot_main_pollutant_by_weather_desc(data):
+    # Group data by 'weather_desc' and count occurrences of 'main_pollutant'
+    pollutant_counts = data.groupby('weather_desc')['main_pollutant'].value_counts().unstack()
+
+    # Create the plot
+    fig, ax = plt.subplots(figsize=(10, 6))  # Adjust figure size
+    pollutant_counts.plot(kind='bar', stacked=True, ax=ax)
+
+    # Set titles and labels
+    ax.set_title("Main Pollutants by Weather Description")
+    ax.set_xlabel("Weather Description")
     ax.set_ylabel("Count")
+    ax.legend(title="Main Pollutant", bbox_to_anchor=(1.05, 1), loc='upper left')
+    plt.tight_layout()  # Adjust layout for better readability
+
     return fig
 
 def plot_weather_aqi_correlation(data):

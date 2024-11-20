@@ -26,17 +26,21 @@ insight = st.sidebar.radio(
      ]
 )
 
-start_date = st.sidebar.date_input(
-    "Start Date (WIB)", data['datetime_wib'].min().date())
-end_date = st.sidebar.date_input(
-    "End Date (WIB)", data['datetime_wib'].max().date())
+# Show date inputs for all insights except "AQI Predictions"
+if insight != "AQI Predictions":
+    start_date = st.sidebar.date_input(
+        "Start Date (WIB)", data['datetime_wib'].min().date())
+    end_date = st.sidebar.date_input(
+        "End Date (WIB)", data['datetime_wib'].max().date())
+    # Filter data based on date (WIB)
+    filtered_data = filter_data(data, start_date, end_date)
+else:
+    filtered_data = data  # Use all data for predictions
 
-# Filter data based on date (WIB)
-filtered_data = filter_data(data, start_date, end_date)
-
-# Slider for number of days for AQI predictions
-days = st.sidebar.slider("Select number of days (1-10):",
-                         min_value=1, max_value=10, value=5)
+# Show slider for the number of days only when "AQI Predictions" is selected
+if insight == "AQI Predictions":
+    days = st.sidebar.slider("Select number of days (1-10):",
+                             min_value=1, max_value=10, value=5)
 
 # Main Content
 st.title("Weather and Air Quality Dashboard")

@@ -45,8 +45,11 @@ def plot_main_pollutant_by_weather_desc(data):
     return fig
 
 def plot_weather_aqi_correlation(data):
+    """
+    Create a scatter matrix to visualize correlations between AQI and weather parameters.
+    """
     # Select relevant columns
-    selected_columns = ['aqi', 'temperature_c', 'humidity_percent', 'wind_speed_ms']
+    selected_columns = ['AQI (CN)', 'Temperature (°C)', 'Humidity (%)', 'Wind Speed (m/s)']
     correlation_data = data[selected_columns]
 
     # Create the scatter matrix

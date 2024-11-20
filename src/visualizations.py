@@ -25,8 +25,11 @@ def plot_aqi_distribution_by_weather_desc(data):
     return fig
 
 def plot_main_pollutant_by_weather_desc(data):
-    # Group data by 'weather_desc' and count occurrences of 'main_pollutant'
-    pollutant_counts = data.groupby('weather_desc')['main_pollutant'].value_counts().unstack()
+    """
+    Plot main pollutants grouped by weather descriptions as a stacked bar chart.
+    """
+    # Group data by 'Weather Description' and count occurrences of 'Main Pollutant (CN)'
+    pollutant_counts = data.groupby('Weather Description')['Main Pollutant (CN)'].value_counts().unstack()
 
     # Create the plot
     fig, ax = plt.subplots(figsize=(10, 6))  # Adjust figure size

@@ -38,7 +38,7 @@ st.sidebar.title("Weather and Air Quality Dashboard")
 insight = st.sidebar.radio(
     "Select Insight",
     [
-        # "AQI Trend Over Time",
+        "AQI Trend Over Time",
      "AQI Distribution by Weather Description",
      "Main Pollutants by Weather Description",
      "Correlation Between Weather Parameters and AQI",
